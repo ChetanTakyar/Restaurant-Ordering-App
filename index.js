@@ -1,6 +1,7 @@
 import { menuArray } from '/data.js';
 const itemsContainer = document.getElementById("app-container")
 const orderSection = document.getElementById("order-section")
+const orderItemArr = [] ;
 
 document.addEventListener("click", function (e) {
     handleAddClick(e.target.dataset.addItem)
@@ -13,22 +14,18 @@ function handleAddClick(menuItemId){
         return item.id === Number(menuItemId);
     })[0];
     console.log(orderItem)
-    const orderItemArr = [];
-        orderItemArr.push(orderItem)
-        console.log("Pushed into array:" + orderItemArr)
-        cart()
-    return orderItemArr
+    orderItemArr.push(orderItem)
+    cart()
     }
     
 
 
 function cart (){
-    let orderedItemsArr = handleAddClick()
-    console.log("Ordered item arr:" + orderedItemsArr)
+    console.log(`Ordered item in cart(): ${orderItemArr}`)
     let orderSmmaryHTML = `
                 <p class = order-section-title>Your order</p>
                 <div class=order-item>
-                    <p>${orderedItemsArr[0].name}</p>
+                    <p>${orderItemArr.name}</p>
                     <button class="complete-order-button">Complete order</button>
                 </div>`
         return orderSmmaryHTML
@@ -60,7 +57,6 @@ function getAppHTML (){
 function renderApp(){
     
     itemsContainer.innerHTML = getAppHTML();
-    orderSection.innerHTML = cart();
 }
 
 renderApp()
