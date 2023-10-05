@@ -4,7 +4,15 @@ const orderSection = document.getElementById("order-section")
 const orderItemArr = [] ;
 
 document.addEventListener("click", function (e) {
-    handleAddClick(e.target.dataset.addItem)
+    if (e.target.dataset.addItem){
+        handleAddClick(e.target.dataset.addItem)
+    }
+
+    else if (e.target.dataset.removeItem){
+        handleRemoveFromCart(e.target.dataset.removeItem)
+        cart()
+    }
+        
     
 });
 
@@ -13,7 +21,6 @@ function handleAddClick(menuItemId){
     const orderItem = menuArray.filter(function(item){
         return item.id === Number(menuItemId);
     })[0];
-    console.log(orderItem)
     orderItemArr.push(orderItem)
     cart()
     }
@@ -21,15 +28,34 @@ function handleAddClick(menuItemId){
 
 
 function cart (){
-    console.log(`Ordered item in cart(): ${orderItemArr}`)
-    let orderSmmaryHTML = `
+
+    let orderItemHTML = "";
+    orderItemArr.forEach(function (item){
+       orderItemHTML += `
+        <div class=order-item>
+            <span>${item.name}</span>
+            <span id="order-item-remove-btn" data-remove-item = ${item.id}> remove</span>
+            <span id="order-item-price">$${item.price}</span>
+        </div>
+        `
+    })
+
+    
+    let orderUIHTML = `
                 <p class = order-section-title>Your order</p>
-                <div class=order-item>
-                    <p>${orderItemArr.name}</p>
+                    ${orderItemHTML}
                     <button class="complete-order-button">Complete order</button>
                 </div>`
-        return orderSmmaryHTML
+        orderSection.innerHTML =  orderUIHTML;
 }
+
+  function handleRemoveFromCart(itemId){
+       const removedItem = orderItemArr.filter(item => {
+        return item.id === Number(itemId)
+       })
+       orderItemArr.pop(removedItem)
+    }
+    
 
 function getAppHTML (){
     let appHTML = ""
