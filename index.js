@@ -12,8 +12,11 @@ document.addEventListener("click", function (e) {
         handleRemoveFromCart(e.target.dataset.removeItem)
         cart()
     }
-        
     
+    else if (e.target.id === "complete-order-button"){
+        handlePayment()
+    }
+        
 });
 
 function handleAddClick(menuItemId){
@@ -24,12 +27,11 @@ function handleAddClick(menuItemId){
     orderItemArr.push(orderItem)
     cart()
     }
-    
-
 
 function cart (){
-
+    let totalOrderPrice = 0;
     let orderItemHTML = "";
+
     orderItemArr.forEach(function (item){
        orderItemHTML += `
         <div class=order-item>
@@ -38,29 +40,31 @@ function cart (){
             <span id="order-item-price">$${item.price}</span>
         </div>
         `
+        totalOrderPrice += item.price
     })
 
-    
+    console.log(totalOrderPrice)
     let orderUIHTML = `
                 <p class = order-section-title>Your order</p>
                     ${orderItemHTML}
-                    <button class="complete-order-button">Complete order</button>
+                    <button class="complete-order-button" id="complete-order-button" >Complete order</button>
                 </div>`
         orderSection.innerHTML =  orderUIHTML;
 }
 
-  function handleRemoveFromCart(itemId){
-       const removedItem = orderItemArr.filter(item => {
-        return item.id === Number(itemId)
-       })
-       orderItemArr.pop(removedItem)
+function handleRemoveFromCart(itemId){
+    const removedItem = orderItemArr.filter(item => {
+    return item.id === (itemId)
+    })
+    orderItemArr.pop(removedItem)
     }
+function handlePayment(){
     
+}
 
 function getAppHTML (){
     let appHTML = ""
     
-
     menuArray.forEach(menuItem => {
         const {name, ingredients, id, price, emoji} = menuItem
         appHTML += `<div class= "menu-item">
@@ -70,7 +74,7 @@ function getAppHTML (){
              <p id= "menuItemIngredients">${ingredients}</p>
              <p id= "menuItemPrice">$${price}</p>
             </div>
-            <button id="plus-button" data-add-item = "${id}">+</button>
+            <button id="plus-button" data-add-item = ${id}>+</button>
         </div>
 
         `
@@ -78,7 +82,6 @@ function getAppHTML (){
     appHTML
     return appHTML
 }
-
 
 function renderApp(){
     
