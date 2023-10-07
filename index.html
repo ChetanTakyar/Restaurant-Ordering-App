@@ -17,14 +17,26 @@
           <h3>The best burgers and pizza in town</h3>
         </div>
       </header>
+      
       <div class = "app-container" id="app-container">
       </div>
-     <div class="order-section" id="order-section"></div>
-
+     
+     <div class="order-section" id="order-section">
+    </div>
     </main> 
+    <div class="modal" id="modal">
+          <h2>Enter card details</h2>
+          <form id="payment-form">
+            <input type="text" id="name-input" name="name" placeholder="Enter your name" required>
+            <input type="number" id="number" name="number" placeholder="Enter card number" required/>
+            <input type="number" id="number" name="number" placeholder="Enter CVV" required>
+            <button id="complete-payment-btn" class="complete-order-button">Pay</button>
+        </form>
+     </div>
     <script
       src="index.js"
-      type="module" >
+      type="module" 
+      defer>
     </script>
   </body> 
  

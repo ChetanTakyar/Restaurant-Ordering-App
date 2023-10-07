@@ -1,6 +1,8 @@
 import { menuArray } from '/data.js';
 const itemsContainer = document.getElementById("app-container")
 const orderSection = document.getElementById("order-section")
+const modal = document.getElementById("modal")
+const paymentBtn = document.getElementById("complete-payment-btn")
 const orderItemArr = [] ;
 
 document.addEventListener("click", function (e) {
@@ -14,10 +16,12 @@ document.addEventListener("click", function (e) {
     }
     
     else if (e.target.id === "complete-order-button"){
-        handlePayment()
+        displayPaymentModal()
     }
         
 });
+
+
 
 function handleAddClick(menuItemId){
  
@@ -47,6 +51,11 @@ function cart (){
     let orderUIHTML = `
                 <p class = order-section-title>Your order</p>
                     ${orderItemHTML}
+                    <div class = "order-item" id = "total-order">
+                        <span> Total price </span> 
+                        <span id="order-item-price"> $${totalOrderPrice} </span>
+                    </div>
+                    
                     <button class="complete-order-button" id="complete-order-button" >Complete order</button>
                 </div>`
         orderSection.innerHTML =  orderUIHTML;
@@ -58,9 +67,22 @@ function handleRemoveFromCart(itemId){
     })
     orderItemArr.pop(removedItem)
     }
-function handlePayment(){
-    
+function displayPaymentModal(){
+    modal.style.display = "block"
 }
+
+paymentBtn.addEventListener("click", e =>{
+    e.preventDefault()
+    const name = document.getElementById("name-input").value
+    modal.style.display = "none"
+    orderSection.innerHTML = `
+    <div class="order-confirmation">
+    <p> Thanks ${name}, your order is on the way!</p>
+    </div>
+    
+    `
+})
+
 
 function getAppHTML (){
     let appHTML = ""
